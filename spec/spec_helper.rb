@@ -1,85 +1,54 @@
+# This file is copied to ~/spec when you run 'ruby script/generate rspec'
+# from the project root directory.
 ENV["RAILS_ENV"] ||= 'test'
-root_path = File.expand_path(File.join(File.dirname(__FILE__), '..'))
-$LOAD_PATH.unshift(File.join(root_path, '/test/lib')) # make requiring from test/lib easy
-
-
-require 'bundler/setup'
-Bundler.require
-
-RAILS_DEFAULT_LOGGER = ENV["STDOUT"] ? Logger.new(STDOUT) : Logger.new(File.join(root_path, '/test/log/test.log'))
-RAILS_CACHE = ActiveSupport::Cache.lookup_store(:file_store, File.join(root_path, '/tmp/cache'))
-
-#load(File.join(root_path, sitemap_rails, 'Rakefile'))
-require File.join(root_path, 'spec', 'rails-2.3.8', 'config', 'boot')
-Rails.boot!
-
-require 'fix_active_support_file_store_expires_in'
-
-# Set loggers for all frameworks
-require 'active_record'
-require 'action_controller'
-for framework in ([ :active_record, :action_controller, :action_mailer ])
-  if Object.const_defined?(framework.to_s.camelize)
-    framework.to_s.camelize.constantize.const_get("Base").logger = Rails.logger
-  end
-end
-ActiveSupport::Dependencies.logger = Rails.logger
-Rails.cache.logger = Rails.logger
-debugger
-require 'db_prepare' #File.join(root_path, 'spec', 'rails-config', 'schema')
-
-#require 'spec/autorun'
-
-#require 'action_controller'
-#require 'active_support/test_case'
-#require 'active_record/fixtures' if defined?(ActiveRecord::Base)
-#require 'spec/test/unit'
-# require 'spec/rails/extensions/spec/runner/configuration'
-# require 'spec/rails/extensions/active_support/test_case'
-# require 'spec/rails/extensions/active_record/base'
-#ActiveSupport::TestCase.use_transactional_fixtures = true
-#Spec::Example::ExampleGroupFactory.default(ActiveSupport::TestCase)
-
-#require 'spec/rails'
-
-# require 'rack/utils'
-#
-# require 'action_controller/test_process'
-# require 'action_controller/integration'
-# require 'active_support/test_case'
-# require 'active_record/fixtures' if defined?(ActiveRecord::Base)
-# require 'spec/test/unit'
-# require 'spec/rails/matchers'
-# require 'spec/rails/mocks'
-# require 'spec/rails/example'
-# require 'spec/rails/extensions'
-# require 'spec/rails/interop/testcase'
-#
-# Spec::Example::ExampleGroupFactory.default(ActiveSupport::TestCase)
-#
-# if ActionView::Base.respond_to?(:cache_template_extensions)
-#   ActionView::Base.cache_template_extensions = false
-# end
-
-
+require File.expand_path(File.join(File.dirname(__FILE__),'..', 'spec', 'rails-2.3.8', 'spec','spec_helper'))
 # require 'spec/autorun'
-#require 'mock_rails'
-require 'blueprint'
-AridCache.init_rails
+# require 'spec/rails'
+# 
+# # Uncomment the next line to use webrat's matchers
+# #require 'webrat/integrations/rspec-rails'
+# 
+# # Requires supporting files with custom matchers and macros, etc,
+# # in ./support/ and its subdirectories.
+# Dir[File.expand_path(File.join(File.dirname(__FILE__),'support','**','*.rb'))].each {|f| require f}
+# 
+# Spec::Runner.configure do |config|
+#   # If you're not using ActiveRecord you should remove these
+#   # lines, delete config/database.yml and disable :active_record
+#   # in your config/boot.rb
+#   config.use_transactional_fixtures = true
+#   config.use_instantiated_fixtures  = false
+  #config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
 
-Dir[File.expand_path(File.join(File.dirname(__FILE__),'support','**','*.rb'))].each {|f| require f}
-
-Spec::Runner.configure do |config|
-  include ActiveRecordQueryMatchers
-  config.mock_with :mocha
-  #config.use_transactional_fixtures = true
-  config.before(:all) do
-    Sham.reset(:before_all)
-  end
-
-  config.before(:each) do
-    Sham.reset(:before_each)
-    full_example_description = "#{self.class.description} #{@method_name}"
-    RAILS_DEFAULT_LOGGER.info("\n\n#{full_example_description}\n#{'-' * (full_example_description.length)}")
-  end
-end
+  # == Fixtures
+  #
+  # You can declare fixtures for each example_group like this:
+  #   describe "...." do
+  #     fixtures :table_a, :table_b
+  #
+  # Alternatively, if you prefer to declare them only once, you can
+  # do so right here. Just uncomment the next line and replace the fixture
+  # names with your fixtures.
+  #
+  # config.global_fixtures = :table_a, :table_b
+  #
+  # If you declare global fixtures, be aware that they will be declared
+  # for all of your examples, even those that don't use them.
+  #
+  # You can also declare which fixtures to use (for example fixtures for test/fixtures):
+  #
+  # config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
+  #
+  # == Mock Framework
+  #
+  # RSpec uses it's own mocking framework by default. If you prefer to
+  # use mocha, flexmock or RR, uncomment the appropriate line:
+  #
+  # config.mock_with :mocha
+  # config.mock_with :flexmock
+  # config.mock_with :rr
+  #
+  # == Notes
+  #
+  # For more information take a look at Spec::Runner::Configuration and Spec::Runner
+# end
