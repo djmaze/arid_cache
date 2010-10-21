@@ -1,1 +1,10 @@
-rails-config/database.yml
+common: &common
+  adapter: sqlite3
+  database: ":memory:"
+  pool: 5
+  timeout: 5000
+              
+development:
+  <<: *common
+test:
+  <<: *common
