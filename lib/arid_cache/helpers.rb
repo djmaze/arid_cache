@@ -63,8 +63,8 @@ module AridCache
 
     private
 
-    # Dynamically define a method on the object's class to return cached results
-    def method_for_cached(object, key, fetch_method=:fetch, method_name=nil)
+    # Dynamically define a method on the given object or class to return cached results
+    def method_for_cached(object_or_class, key, fetch_method=:fetch, method_name=nil)
       method_name = ("cached_" + (method_name || key)).gsub(/[^\w\!\?]/, '_')
       method_body = <<-END
         def #{method_name}(*args, &block)
@@ -78,9 +78,9 @@ module AridCache
           end
         end
       END
-      # Get the correct object
-      object = (class << object; self; end) if object.is_a?(Class)
-      object.class_eval(method_body, __FILE__, __LINE__)
+      # Get the correct class
+      klass = object_or_class.is_a?(Class) ? object_or_class : object_or_class.class
+      klass.class_eval(method_body, __FILE__, __LINE__)
     end
   end  
 end

@@ -109,6 +109,7 @@ module AridCache
     protected
     
     def add_generic_cache_configuration(store_key, *args)
+      AridCache.send(:method_for_cached, args[0], args[1].to_s)		# TODO Right place for this?
       self[store_key] = AridCache::Store::Blueprint.new(*args)
     end
       
