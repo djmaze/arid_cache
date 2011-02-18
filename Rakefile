@@ -5,16 +5,18 @@ Bundler.require
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "arid_cache"
+    gem.name = "djmaze-arid_cache"
     gem.summary = %Q{Automates efficient caching of your ActiveRecord collections, gives you counts for free and supports pagination.}
     gem.description = <<-END.gsub(/^\s+/, '')
+      Fork of arid_cache which defines caching methods once on a class instead of per object, thus preventing "singleton can't be dumped" from memcached!
+
       AridCache makes caching easy and effective.  AridCache supports caching on all your model named scopes, class methods and instance methods right out of the box.  AridCache prevents caching logic from cluttering your models and clarifies your logic by making explicit calls to cached result sets.
 
       AridCache is designed for handling large, expensive ActiveRecord collections but is equally useful for caching anything else as well.
     END
-    gem.email = "kjvarga@gmail.com"
-    gem.homepage = "http://github.com/kjvarga/arid_cache"
-    gem.authors = ["Karl Varga"]
+    gem.email = "maze@strahlungsfrei.de"
+    gem.homepage = "http://github.com/djmaze/arid_cache"
+    gem.authors = ["Karl Varga", "Martin Honermeyer"]
     gem.add_dependency "will_paginate"
     gem.add_development_dependency "will_paginate"
     gem.add_development_dependency "faker"
